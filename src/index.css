@@ -1,0 +1,14 @@
+/* 
+  index.css - Base browser reset
+  Additional resets that complement App.css 
+*/
+
+/* Remove default margin/padding on all elements */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+}

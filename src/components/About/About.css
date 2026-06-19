@@ -1,0 +1,230 @@
+/* =========================================
+   About.css - About Section Styles
+   FIXES:
+   - about__image-wrapper: removed conflicting
+     flex:1 + flex-shrink:0 (pick one)
+   - Floating badge clipped on mobile — constrained
+     to stay within image bounds
+   - Decoration border overflow fix on mobile
+   - Added overflow:visible to image wrapper so
+     badge doesn't get cut off
+   ========================================= */
+
+/* === SECTION === */
+.about {
+  background-color: var(--bg-light);
+}
+
+/* === TWO-COLUMN LAYOUT === */
+.about__container {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-2xl);
+}
+
+/* === LEFT COLUMN (Image) === */
+.about__image-wrapper {
+  position: relative;
+  /* FIX: use fixed width + allow shrink, not flex:1 + flex-shrink:0 (contradictory) */
+  flex: 0 0 430px;
+  max-width: 430px;
+  /* FIX: extra padding-bottom & right so floating badge doesn't get clipped */
+  padding-bottom: 30px;
+  padding-right: 20px;
+}
+
+/* Decorative border box */
+.about__image-decoration {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  /* FIX: use positive right/bottom so it doesn't overflow page on mobile */
+  right: 0;
+  bottom: 14px;
+  border: 3px solid var(--primary);
+  border-radius: var(--border-radius-lg);
+  opacity: 0.25;
+  z-index: 0;
+}
+
+/* Main image */
+.about__image {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  border-radius: var(--border-radius-lg);
+  box-shadow: var(--shadow-lg);
+  transition: transform var(--transition-slow);
+  display: block;
+}
+
+.about__image:hover {
+  transform: scale(1.02);
+}
+
+/* Floating rating badge */
+.about__badge {
+  position: absolute;
+  /* FIX: keep within the padded area — no negative offset that overflows */
+  bottom: 0;
+  right: 0;
+  z-index: 2;
+  background: white;
+  border-radius: var(--border-radius-md);
+  padding: 12px 16px;
+  box-shadow: var(--shadow-lg);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  animation: floatBadge 3s ease-in-out infinite;
+  white-space: nowrap;
+}
+
+@keyframes floatBadge {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+.about__badge-icon {
+  font-size: 1.5rem;
+  line-height: 1;
+}
+
+.about__badge-number {
+  font-size: var(--font-size-xl);
+  font-weight: 800;
+  color: var(--primary);
+  line-height: 1;
+}
+
+.about__badge-text {
+  font-size: var(--font-size-xs);
+  color: var(--text-light);
+  font-weight: 500;
+}
+
+/* === RIGHT COLUMN (Content) === */
+.about__content {
+  flex: 1;
+  min-width: 0; /* FIX: prevent text overflow in flex layout */
+}
+
+.about__intro {
+  font-size: var(--font-size-md);
+  color: var(--text-medium);
+  line-height: 1.8;
+  margin-bottom: var(--spacing-xl);
+  margin-top: var(--spacing-md);
+}
+
+/* === NUMBERED FEATURES === */
+.about__features {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+  margin-bottom: var(--spacing-xl);
+}
+
+/* Single feature row */
+.about__feature {
+  display: flex;
+  gap: var(--spacing-md);
+  align-items: flex-start;
+  padding: var(--spacing-md);
+  border-radius: var(--border-radius-md);
+  transition: background var(--transition-fast);
+}
+
+.about__feature:hover {
+  background-color: var(--primary-light);
+}
+
+/* Big decorative number */
+.about__feature-number {
+  font-size: var(--font-size-3xl);
+  font-weight: 900;
+  color: var(--primary);
+  opacity: 0.2;
+  line-height: 1;
+  flex-shrink: 0;
+  width: 48px;
+  text-align: center;
+  transition: opacity var(--transition-fast);
+}
+
+.about__feature:hover .about__feature-number {
+  opacity: 0.5;
+}
+
+/* Feature title */
+.about__feature-title {
+  font-size: var(--font-size-md);
+  font-weight: 700;
+  color: var(--text-dark);
+  margin-bottom: 6px;
+  line-height: 1.4;
+}
+
+/* Feature description */
+.about__feature-desc {
+  font-size: var(--font-size-sm);
+  color: var(--text-medium);
+  line-height: 1.7;
+}
+
+/* CTA Button */
+.about__btn {
+  margin-top: var(--spacing-sm);
+}
+
+/* === RESPONSIVE === */
+
+/* Tablet — reduce image column size */
+@media (max-width: 900px) {
+  .about__container {
+    gap: var(--spacing-xl);
+  }
+
+  .about__image-wrapper {
+    flex: 0 0 340px;
+    max-width: 340px;
+  }
+}
+
+/* Mobile — stack vertically */
+@media (max-width: 768px) {
+  .about__container {
+    flex-direction: column;
+    gap: var(--spacing-xl);
+  }
+
+  .about__image-wrapper {
+    flex: none;
+    width: 100%;
+    max-width: 100%;
+    /* FIX: keep extra padding for badge */
+    padding-bottom: 28px;
+    padding-right: 16px;
+  }
+
+  .about__image-decoration {
+    top: 12px;
+    left: 12px;
+  }
+
+  .about__content {
+    width: 100%;
+  }
+}
+
+/* Small mobile */
+@media (max-width: 480px) {
+  .about__feature {
+    padding: var(--spacing-sm);
+  }
+
+  .about__feature-number {
+    font-size: var(--font-size-2xl);
+    width: 38px;
+  }
+}

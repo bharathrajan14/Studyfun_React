@@ -1,0 +1,156 @@
+/* =========================================
+   Statistics.css - Stats Section Styles
+   FIXES:
+   - Added proper padding for mobile
+   - Cards overflow fix with min-width: 0
+   - Number font size clamp for small screens
+   ========================================= */
+
+/* === SECTION BASE === */
+.statistics {
+  /* padding is inherited from global .section class */
+  background-color: var(--bg-green-light);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Decorative background shape */
+.statistics::before {
+  content: '';
+  position: absolute;
+  top: -80px;
+  left: -80px;
+  width: 250px;
+  height: 250px;
+  border-radius: 50%;
+  background: rgba(0, 184, 148, 0.06);
+  pointer-events: none;
+}
+
+/* === HEADER TEXT === */
+.statistics__header {
+  text-align: center;
+  margin-bottom: var(--spacing-2xl);
+}
+
+.statistics__desc {
+  margin: 0 auto;
+  text-align: center;
+}
+
+/* === CARDS GRID === */
+.statistics__grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr); /* FIX: explicit 4 columns desktop */
+  gap: var(--spacing-lg);
+}
+
+/* === INDIVIDUAL CARD === */
+.statistics__card {
+  background-color: var(--bg-white);
+  border-radius: var(--border-radius-lg);
+  padding: var(--spacing-xl) var(--spacing-md);
+  text-align: center;
+  box-shadow: var(--shadow-sm);
+  transition: all var(--transition-normal);
+  position: relative;
+  overflow: hidden;
+  cursor: default;
+  min-width: 0; /* FIX: prevent flex/grid child overflow */
+}
+
+.statistics__card:hover {
+  transform: translateY(-6px);
+  box-shadow: var(--shadow-lg);
+}
+
+/* === ICON CIRCLE === */
+.statistics__icon {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto var(--spacing-md);
+  transition: transform var(--transition-normal);
+}
+
+.statistics__card:hover .statistics__icon {
+  transform: scale(1.1) rotate(5deg);
+}
+
+.statistics__icon-emoji {
+  font-size: 1.8rem;
+  line-height: 1;
+}
+
+/* === BIG NUMBER === */
+.statistics__number {
+  /* FIX: clamp so it never overflows on small cards */
+  font-size: clamp(1.8rem, 4vw, 2.5rem);
+  font-weight: 900;
+  line-height: 1;
+  margin-bottom: 8px;
+  transition: transform var(--transition-fast);
+}
+
+.statistics__card:hover .statistics__number {
+  transform: scale(1.05);
+}
+
+/* === LABEL TEXT === */
+.statistics__label {
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  color: var(--text-medium);
+  letter-spacing: 0.3px;
+}
+
+/* === BOTTOM ACCENT LINE === */
+.statistics__accent {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  border-radius: 0 0 var(--border-radius-lg) var(--border-radius-lg);
+  transform: scaleX(0);
+  transform-origin: center;
+  transition: transform var(--transition-normal);
+}
+
+.statistics__card:hover .statistics__accent {
+  transform: scaleX(1);
+}
+
+/* === RESPONSIVE === */
+
+/* Tablet — 2 columns */
+@media (max-width: 768px) {
+  .statistics__grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--spacing-md);
+  }
+}
+
+/* Small mobile — keep 2 columns, smaller padding */
+@media (max-width: 400px) {
+  .statistics__grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--spacing-sm);
+  }
+
+  .statistics__card {
+    padding: var(--spacing-md) var(--spacing-sm);
+  }
+
+  .statistics__icon {
+    width: 48px;
+    height: 48px;
+  }
+
+  .statistics__icon-emoji {
+    font-size: 1.3rem;
+  }
+}

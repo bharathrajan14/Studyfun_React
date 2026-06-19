@@ -1,0 +1,149 @@
+/* =========================================
+   Skills.css - Skills Section Styles
+   FIXES:
+   - min-width: 0 on grid children to prevent text overflow
+   - Better description clamping
+   - More consistent gap on mobile
+   ========================================= */
+
+/* === SECTION === */
+.skills {
+  background-color: var(--bg-white);
+}
+
+/* === HEADER === */
+.skills__header {
+  text-align: center;
+  margin-bottom: var(--spacing-2xl);
+}
+
+.skills__desc {
+  margin: 0 auto;
+}
+
+/* === GRID LAYOUT === */
+.skills__grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--spacing-lg);
+}
+
+/* === SKILL CARD === */
+.skills__card {
+  background-color: var(--bg-white);
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius-lg);
+  padding: var(--spacing-xl) var(--spacing-lg);
+  transition: all var(--transition-normal);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+  min-width: 0; /* FIX: prevent grid child from overflowing */
+}
+
+/* Top border accent */
+.skills__card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--primary), var(--accent-yellow));
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform var(--transition-normal);
+}
+
+.skills__card:hover::before {
+  transform: scaleX(1);
+}
+
+.skills__card:hover {
+  transform: translateY(-6px);
+  box-shadow: var(--shadow-lg);
+  border-color: transparent;
+}
+
+/* === ICON === */
+.skills__icon {
+  width: 60px;
+  height: 60px;
+  border-radius: var(--border-radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: transform var(--transition-normal);
+}
+
+.skills__card:hover .skills__icon {
+  transform: scale(1.1) rotate(-5deg);
+}
+
+.skills__icon-emoji {
+  font-size: 1.7rem;
+  line-height: 1;
+}
+
+/* === CONTENT === */
+.skills__content {
+  flex: 1;
+  min-width: 0; /* FIX: text doesn't blow out of card */
+}
+
+.skills__title {
+  font-size: var(--font-size-lg);
+  font-weight: 700;
+  margin-bottom: 8px;
+  line-height: 1.3;
+  /* FIX: long words wrap gracefully */
+  overflow-wrap: break-word;
+  word-break: break-word;
+}
+
+.skills__description {
+  font-size: var(--font-size-sm);
+  color: var(--text-light);
+  line-height: 1.7;
+}
+
+/* === LINK === */
+.skills__link {
+  font-size: var(--font-size-sm);
+  font-weight: 700;
+  text-decoration: none;
+  transition: gap var(--transition-fast);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: auto;
+}
+
+.skills__link:hover {
+  gap: 12px;
+}
+
+/* === RESPONSIVE === */
+
+/* Tablet — 2 columns */
+@media (max-width: 900px) {
+  .skills__grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* Mobile — 1 column */
+@media (max-width: 560px) {
+  .skills__grid {
+    grid-template-columns: 1fr;
+    gap: var(--spacing-md);
+  }
+
+  .skills__card {
+    padding: var(--spacing-lg);
+  }
+}

@@ -1,0 +1,321 @@
+/* =========================================
+   Newsletter.css - Email Signup Styles
+   FIXES:
+   - Image wrapper: flex:0 0 380px caused overflow
+     on medium screens. Changed to max-width approach.
+   - Form: input + button may overflow on narrow screens
+   - Added max-width on submit button for tiny screens
+   - Mobile: column-reverse had confusing UX, changed
+     to column (form first, then image)
+   ========================================= */
+
+/* === SECTION === */
+.newsletter {
+  background: linear-gradient(135deg, #00b894 0%, #00d4aa 50%, #00cec9 100%);
+  padding: var(--spacing-3xl) 0;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Decorative circles */
+.newsletter::before {
+  content: '';
+  position: absolute;
+  top: -60px;
+  left: -60px;
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.08);
+  pointer-events: none;
+}
+
+.newsletter::after {
+  content: '';
+  position: absolute;
+  bottom: -80px;
+  right: -80px;
+  width: 280px;
+  height: 280px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.06);
+  pointer-events: none;
+}
+
+/* === TWO-COLUMN LAYOUT === */
+.newsletter__container {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-2xl);
+}
+
+/* === LEFT COLUMN === */
+.newsletter__content {
+  flex: 1;
+  min-width: 0; /* FIX: prevent text overflow */
+  color: white;
+}
+
+/* Badge */
+.newsletter__badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(255, 255, 255, 0.2);
+  color: white;
+  padding: 6px 16px;
+  border-radius: var(--border-radius-full);
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  margin-bottom: var(--spacing-md);
+  backdrop-filter: blur(4px);
+}
+
+/* Heading */
+.newsletter__title {
+  font-size: clamp(1.4rem, 3vw, 2.2rem);
+  font-weight: 800;
+  line-height: 1.2;
+  margin-bottom: var(--spacing-md);
+  color: white;
+}
+
+/* Yellow highlight on "Special Offer" */
+.newsletter__title-highlight {
+  color: var(--accent-yellow);
+  text-decoration: underline;
+  text-decoration-color: rgba(253, 203, 110, 0.5);
+  text-underline-offset: 4px;
+}
+
+/* Description */
+.newsletter__description {
+  font-size: var(--font-size-md);
+  color: rgba(255, 255, 255, 0.85);
+  line-height: 1.7;
+  margin-bottom: var(--spacing-lg);
+}
+
+/* === PERKS LIST === */
+.newsletter__perks {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: var(--spacing-xl);
+}
+
+.newsletter__perk {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: var(--font-size-sm);
+  color: rgba(255, 255, 255, 0.92);
+  font-weight: 500;
+}
+
+.newsletter__perk-icon {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.25);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.65rem;
+  font-weight: 800;
+  flex-shrink: 0;
+  line-height: 1;
+}
+
+/* === EMAIL FORM === */
+.newsletter__form {
+  display: flex;
+  gap: var(--spacing-sm);
+  margin-bottom: var(--spacing-md);
+  /* FIX: always wraps so button never causes overflow */
+  flex-wrap: wrap;
+}
+
+/* Input wrapper with icon */
+.newsletter__input-wrapper {
+  flex: 1 1 220px; /* FIX: grows & shrinks, min 220px */
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.newsletter__input-icon {
+  position: absolute;
+  left: 14px;
+  font-size: 1rem;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.newsletter__input {
+  width: 100%;
+  padding: 13px 16px 13px 42px;
+  border-radius: var(--border-radius-full);
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  background: rgba(255, 255, 255, 0.95);
+  font-size: var(--font-size-md);
+  color: var(--text-dark);
+  transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+  outline: none;
+}
+
+.newsletter__input:focus {
+  border-color: var(--accent-yellow);
+  box-shadow: 0 0 0 3px rgba(253, 203, 110, 0.3);
+}
+
+.newsletter__input::placeholder {
+  color: var(--text-light);
+}
+
+/* Submit button */
+.newsletter__submit {
+  padding: 13px 24px;
+  border-radius: var(--border-radius-full);
+  background-color: #1a1a2e;
+  color: white;
+  font-size: var(--font-size-md);
+  font-weight: 700;
+  border: none;
+  cursor: pointer;
+  transition: background-color var(--transition-normal), color var(--transition-normal), transform var(--transition-fast), box-shadow var(--transition-fast);
+  white-space: nowrap;
+  /* FIX: prevent button from becoming too wide */
+  flex-shrink: 0;
+}
+
+.newsletter__submit:hover {
+  background-color: var(--accent-yellow);
+  color: var(--text-dark);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+}
+
+.newsletter__submit:active {
+  transform: translateY(0);
+}
+
+/* === FEEDBACK MESSAGES === */
+.newsletter__message {
+  padding: 10px 16px;
+  border-radius: var(--border-radius-sm);
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  margin-bottom: var(--spacing-sm);
+}
+
+.newsletter__message--success {
+  background: rgba(255, 255, 255, 0.2);
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+}
+
+.newsletter__message--error {
+  background: rgba(231, 76, 60, 0.2);
+  color: #ffe0e0;
+  border: 1px solid rgba(231, 76, 60, 0.4);
+}
+
+/* Privacy note */
+.newsletter__privacy {
+  font-size: var(--font-size-xs);
+  color: rgba(255, 255, 255, 0.65);
+}
+
+/* === RIGHT COLUMN (Image) ===
+   FIX: was flex: 0 0 380px which overflowed on mid screens.
+   Now uses max-width with flex-shrink so it gracefully shrinks.
+*/
+.newsletter__image-wrapper {
+  flex: 0 1 380px; /* FIX: flex-shrink: 1 so it shrinks on tablet */
+  max-width: 380px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.newsletter__image {
+  width: 100%;
+  border-radius: var(--border-radius-xl);
+  animation: floatImg 3s ease-in-out infinite;
+  filter: drop-shadow(0 20px 40px rgba(0, 0, 0, 0.15));
+}
+
+@keyframes floatImg {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-14px); }
+}
+
+/* === RESPONSIVE === */
+
+/* Tablet — shrink image */
+@media (max-width: 900px) {
+  .newsletter__container {
+    gap: var(--spacing-xl);
+  }
+
+  .newsletter__image-wrapper {
+    flex: 0 1 260px;
+    max-width: 260px;
+  }
+}
+
+/* Mobile — stack vertically (form first, then image below) */
+@media (max-width: 768px) {
+  .newsletter__container {
+    flex-direction: column; /* FIX: content first, image below */
+    gap: var(--spacing-xl);
+  }
+
+  .newsletter__image-wrapper {
+    flex: none;
+    width: 100%;
+    max-width: 220px;
+    margin: 0 auto;
+  }
+
+  .newsletter__content {
+    text-align: center;
+    width: 100%;
+  }
+
+  .newsletter__badge {
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .newsletter__perk {
+    justify-content: center;
+  }
+
+  .newsletter__form {
+    flex-direction: column;
+    gap: var(--spacing-sm);
+  }
+
+  .newsletter__input-wrapper {
+    flex: none;
+    width: 100%;
+  }
+
+  .newsletter__submit {
+    width: 100%;
+  }
+
+  .newsletter__privacy {
+    text-align: center;
+  }
+}
+
+/* Small mobile */
+@media (max-width: 400px) {
+  .newsletter__image-wrapper {
+    display: none; /* FIX: hide image on very small screens to save space */
+  }
+}

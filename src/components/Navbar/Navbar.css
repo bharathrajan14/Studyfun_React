@@ -1,0 +1,271 @@
+/* =========================================
+   Navbar.css - Navigation Styles
+   FIXES:
+   - Mobile menu now uses max-height transition
+     instead of display:none (which can't animate)
+   - Hamburger properly shows/hides
+   - Container overflow safe
+   ========================================= */
+
+/* === NAVBAR BASE === */
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  background-color: var(--bg-white);
+  transition: box-shadow var(--transition-normal);
+  border-bottom: 1px solid var(--border-color);
+  /* FIX: ensure navbar never causes horizontal overflow */
+  width: 100%;
+}
+
+.navbar--scrolled {
+  box-shadow: var(--shadow-md);
+}
+
+/* Inner flex container */
+.navbar__container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: var(--navbar-height);
+}
+
+/* === LOGO === */
+.navbar__logo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  text-decoration: none;
+  flex-shrink: 0; /* FIX: logo must not shrink on narrow screens */
+}
+
+.navbar__logo-icon {
+  font-size: 1.5rem;
+  line-height: 1;
+}
+
+.navbar__logo-text {
+  font-size: 1.4rem;
+  font-weight: 800;
+  color: var(--text-dark);
+  letter-spacing: -0.5px;
+  white-space: nowrap;
+}
+
+.navbar__logo-highlight {
+  color: var(--primary);
+}
+
+/* === DESKTOP NAV LINKS === */
+.navbar__links {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  list-style: none;
+  /* FIX: allow links to shrink on mid-size screens */
+  flex-wrap: wrap;
+}
+
+.navbar__link {
+  padding: 8px 12px;
+  font-size: var(--font-size-sm);
+  font-weight: 500;
+  color: var(--text-medium);
+  border-radius: var(--border-radius-sm);
+  transition: color var(--transition-fast);
+  text-decoration: none;
+  position: relative;
+  white-space: nowrap;
+}
+
+/* Underline animation on hover */
+.navbar__link::after {
+  content: '';
+  position: absolute;
+  bottom: 4px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 2px;
+  background-color: var(--primary);
+  border-radius: 2px;
+  transition: width var(--transition-fast);
+}
+
+.navbar__link:hover {
+  color: var(--primary);
+}
+
+.navbar__link:hover::after {
+  width: 70%;
+}
+
+/* === ACTION BUTTONS (Desktop) === */
+.navbar__actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.navbar__btn {
+  padding: 8px 18px;
+  border-radius: var(--border-radius-full);
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  transition: all var(--transition-normal);
+  text-decoration: none;
+  display: inline-block;
+  border: 2px solid transparent;
+  white-space: nowrap;
+  line-height: 1.4;
+}
+
+.navbar__btn--outline {
+  color: var(--primary);
+  border-color: var(--primary);
+}
+
+.navbar__btn--outline:hover {
+  background-color: var(--primary);
+  color: white;
+}
+
+.navbar__btn--primary {
+  background-color: var(--primary);
+  color: white;
+  box-shadow: var(--shadow-green);
+}
+
+.navbar__btn--primary:hover {
+  background-color: var(--primary-dark);
+  box-shadow: 0 6px 20px rgba(0, 184, 148, 0.4);
+}
+
+/* === HAMBURGER BUTTON === */
+.navbar__hamburger {
+  /* FIX: always in DOM but hidden on desktop */
+  display: none;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 30px;
+  height: 22px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 2px 0;
+  z-index: 1001;
+  flex-shrink: 0;
+}
+
+.navbar__hamburger-line {
+  display: block;
+  width: 100%;
+  height: 2px;
+  background-color: var(--text-dark);
+  border-radius: 2px;
+  transition: all var(--transition-normal);
+  transform-origin: center;
+}
+
+/* X animation when menu is open */
+.navbar__hamburger--active .navbar__hamburger-line:nth-child(1) {
+  transform: translateY(10px) rotate(45deg);
+}
+
+.navbar__hamburger--active .navbar__hamburger-line:nth-child(2) {
+  opacity: 0;
+  transform: scaleX(0);
+}
+
+.navbar__hamburger--active .navbar__hamburger-line:nth-child(3) {
+  transform: translateY(-10px) rotate(-45deg);
+}
+
+/* === MOBILE MENU DROPDOWN ===
+   FIX: use max-height transition instead of display:none
+   so the open/close can be animated smoothly.
+*/
+.navbar__mobile-menu {
+  position: absolute;
+  top: var(--navbar-height);
+  left: 0;
+  right: 0;
+  background-color: var(--bg-white);
+  box-shadow: var(--shadow-lg);
+  border-top: 1px solid var(--border-color);
+  /* Collapsed state */
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height var(--transition-normal);
+}
+
+/* Expanded state */
+.navbar__mobile-menu--open {
+  max-height: 500px; /* large enough to fit all links */
+}
+
+/* Inner padding wrapper (so padding doesn't affect max-height calculation weirdly) */
+.navbar__mobile-inner {
+  padding: var(--spacing-md) var(--spacing-md) var(--spacing-lg);
+}
+
+.navbar__mobile-links {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-bottom: var(--spacing-md);
+}
+
+.navbar__mobile-link {
+  display: block;
+  padding: 11px 16px;
+  font-size: var(--font-size-md);
+  font-weight: 500;
+  color: var(--text-medium);
+  border-radius: var(--border-radius-sm);
+  transition: all var(--transition-fast);
+  text-decoration: none;
+}
+
+.navbar__mobile-link:hover {
+  background-color: var(--primary-light);
+  color: var(--primary);
+  padding-left: 22px;
+}
+
+.navbar__mobile-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.navbar__mobile-actions .navbar__btn {
+  flex: 1;
+  text-align: center;
+}
+
+/* === RESPONSIVE === */
+@media (max-width: 768px) {
+  .navbar__links {
+    display: none;
+  }
+
+  .navbar__actions {
+    display: none;
+  }
+
+  .navbar__hamburger {
+    display: flex;
+  }
+}
+
+/* Mid-tablet: shrink button text */
+@media (max-width: 900px) and (min-width: 769px) {
+  .navbar__btn {
+    padding: 7px 14px;
+    font-size: var(--font-size-xs);
+  }
+}
